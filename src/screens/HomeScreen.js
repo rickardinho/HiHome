@@ -77,17 +77,11 @@ export default function HomeScreen({ navigation }) {
             <ButtonText>View Location</ButtonText>
           </AccentButton>
 
+          <SecondaryButton onPress={navigateToWeather}>
+            <SecondaryButtonText>Weather Forecast</SecondaryButtonText>
+          </SecondaryButton>
 
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={navigateToWeather}
-          >
-            <Text style={styles.actionButtonText}>Weather Forecast</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.actionButton, styles.secondaryButton]}
-
+          <SecondaryButton
             onPress={() => Alert.alert('Feature', 'Coming soon!')}
           >
             <SecondaryButtonText>
