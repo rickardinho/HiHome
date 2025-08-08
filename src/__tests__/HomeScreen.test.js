@@ -41,6 +41,8 @@ describe('HomeScreen', () => {
     expect(getByText('Welcome Home!')).toBeTruthy();
     expect(getByText('Hello, John Doe')).toBeTruthy();
     expect(getByText('View Location')).toBeTruthy();
+    expect(getByText('Garden Map')).toBeTruthy();
+    expect(getByText('Weather Forecast')).toBeTruthy();
     expect(getByText('Smart Home Controls')).toBeTruthy();
     expect(getByText('Energy Monitoring')).toBeTruthy();
     expect(getByText('Logout')).toBeTruthy();
@@ -81,6 +83,28 @@ describe('HomeScreen', () => {
     fireEvent.press(locationButton);
 
     expect(mockNavigate).toHaveBeenCalledWith('Location');
+  });
+
+  test('should navigate to Garden Map screen when Garden Map is pressed', () => {
+    const { getByText } = render(
+      <HomeScreen navigation={mockNavigation} />
+    );
+
+    const gardenMapButton = getByText('Garden Map');
+    fireEvent.press(gardenMapButton);
+
+    expect(mockNavigate).toHaveBeenCalledWith('GardenMap');
+  });
+
+  test('should navigate to Weather screen when Weather Forecast is pressed', () => {
+    const { getByText } = render(
+      <HomeScreen navigation={mockNavigation} />
+    );
+
+    const weatherButton = getByText('Weather Forecast');
+    fireEvent.press(weatherButton);
+
+    expect(mockNavigate).toHaveBeenCalledWith('Weather');
   });
 
   test('should show alert for Smart Home Controls feature', () => {

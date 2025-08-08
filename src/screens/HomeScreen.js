@@ -62,6 +62,10 @@ export default function HomeScreen({ navigation }) {
     navigation.navigate('Weather');
   };
 
+  const navigateToGardenMap = () => {
+    navigation.navigate('GardenMap');
+  };
+
   return (
     <SafeContainer>
       <ContentContainer>
@@ -76,6 +80,10 @@ export default function HomeScreen({ navigation }) {
           <AccentButton onPress={navigateToLocation}>
             <ButtonText>View Location</ButtonText>
           </AccentButton>
+
+          <SecondaryButton onPress={navigateToGardenMap}>
+            <SecondaryButtonText>Garden Map</SecondaryButtonText>
+          </SecondaryButton>
 
           <SecondaryButton onPress={navigateToWeather}>
             <SecondaryButtonText>Weather Forecast</SecondaryButtonText>
