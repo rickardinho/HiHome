@@ -34,6 +34,10 @@ export default function HomeScreen({ navigation }) {
     navigation.navigate('Location');
   };
 
+  const navigateToWeather = () => {
+    navigation.navigate('Weather');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
@@ -50,6 +54,13 @@ export default function HomeScreen({ navigation }) {
             onPress={navigateToLocation}
           >
             <Text style={styles.actionButtonText}>View Location</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={navigateToWeather}
+          >
+            <Text style={styles.actionButtonText}>Weather Forecast</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
