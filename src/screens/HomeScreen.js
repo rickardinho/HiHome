@@ -58,6 +58,10 @@ export default function HomeScreen({ navigation }) {
     navigation.navigate('Location');
   };
 
+  const navigateToWeather = () => {
+    navigation.navigate('Weather');
+  };
+
   return (
     <SafeContainer>
       <ContentContainer>
@@ -73,7 +77,17 @@ export default function HomeScreen({ navigation }) {
             <ButtonText>View Location</ButtonText>
           </AccentButton>
 
-          <SecondaryButton
+
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={navigateToWeather}
+          >
+            <Text style={styles.actionButtonText}>Weather Forecast</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.actionButton, styles.secondaryButton]}
+
             onPress={() => Alert.alert('Feature', 'Coming soon!')}
           >
             <SecondaryButtonText>
