@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
 import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
   Alert,
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
 import { useAuth } from '../auth/AuthContext';
+import {
+  Container,
+  CenteredContainer,
+  Title,
+  Subtitle,
+  Input,
+  PrimaryButton,
+  ButtonText,
+  LinkButton,
+  LinkText,
+} from '../theme/components';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -37,17 +43,16 @@ export default function LoginScreen({ navigation }) {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
-      <View style={styles.content}>
-        <Text style={styles.title}>Welcome to HiHome</Text>
-        <Text style={styles.subtitle}>Please sign in to continue</Text>
+    <Container>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <CenteredContainer>
+          <Title>Welcome to HiHome</Title>
+          <Subtitle>Please sign in to continue</Subtitle>
 
-        <View style={styles.form}>
-          <TextInput
-            style={styles.input}
+          <Input
             placeholder="Email"
             value={email}
             onChangeText={setEmail}
@@ -56,8 +61,7 @@ export default function LoginScreen({ navigation }) {
             autoCorrect={false}
           />
 
-          <TextInput
-            style={styles.input}
+          <Input
             placeholder="Password"
             value={password}
             onChangeText={setPassword}
@@ -66,87 +70,23 @@ export default function LoginScreen({ navigation }) {
             autoCorrect={false}
           />
 
-          <TouchableOpacity
-            style={[styles.button, isLoading && styles.buttonDisabled]}
+          <PrimaryButton
             onPress={handleLogin}
             disabled={isLoading}
           >
-            <Text style={styles.buttonText}>
+            <ButtonText>
               {isLoading ? 'Signing In...' : 'Sign In'}
-            </Text>
-          </TouchableOpacity>
+            </ButtonText>
+          </PrimaryButton>
 
-          <TouchableOpacity
-            style={styles.linkButton}
-            onPress={navigateToSignup}
-          >
-            <Text style={styles.linkText}>
+          <LinkButton onPress={navigateToSignup}>
+            <LinkText>
               Don't have an account? Sign up
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </KeyboardAvoidingView>
+            </LinkText>
+          </LinkButton>
+        </CenteredContainer>
+      </KeyboardAvoidingView>
+    </Container>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f5f5f5',
-  },
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 20,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 10,
-    color: '#333',
-  },
-  subtitle: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginBottom: 40,
-    color: '#666',
-  },
-  form: {
-    width: '100%',
-  },
-  input: {
-    backgroundColor: 'white',
-    paddingHorizontal: 15,
-    paddingVertical: 12,
-    borderRadius: 8,
-    marginBottom: 15,
-    fontSize: 16,
-    borderWidth: 1,
-    borderColor: '#ddd',
-  },
-  button: {
-    backgroundColor: '#007AFF',
-    paddingVertical: 15,
-    borderRadius: 8,
-    marginBottom: 15,
-    alignItems: 'center',
-  },
-  buttonDisabled: {
-    backgroundColor: '#ccc',
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  linkButton: {
-    alignItems: 'center',
-    paddingVertical: 10,
-  },
-  linkText: {
-    color: '#007AFF',
-    fontSize: 16,
-  },
-});
