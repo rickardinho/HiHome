@@ -1,13 +1,37 @@
 import React from 'react';
 import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  SafeAreaView,
   Alert,
+  View,
 } from 'react-native';
 import { useAuth } from '../auth/AuthContext';
+import {
+  SafeContainer,
+  ContentContainer,
+  Title,
+  Subtitle,
+  AccentButton,
+  SecondaryButton,
+  ButtonText,
+  SecondaryButtonText,
+  LogoutButton,
+  LogoutButtonText,
+} from '../theme/components';
+import styled from 'styled-components/native';
+import { theme } from '../theme';
+
+const HomeHeader = styled.View`
+  align-items: center;
+  margin-top: ${theme.spacing.xl}px;
+  margin-bottom: ${theme.spacing.xl}px;
+`;
+
+const ActionsContainer = styled.View`
+  flex: 1;
+`;
+
+const FooterContainer = styled.View`
+  padding-bottom: ${theme.spacing.lg}px;
+`;
 
 export default function HomeScreen({ navigation }) {
   const { user, logout } = useAuth();
@@ -39,22 +63,20 @@ export default function HomeScreen({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
-        <View style={styles.header}>
-          <Text style={styles.title}>Welcome Home!</Text>
-          <Text style={styles.subtitle}>
+    <SafeContainer>
+      <ContentContainer>
+        <HomeHeader>
+          <Title>Welcome Home!</Title>
+          <Subtitle>
             Hello, {user?.name || 'User'}
-          </Text>
-        </View>
+          </Subtitle>
+        </HomeHeader>
 
-        <View style={styles.actions}>
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={navigateToLocation}
-          >
-            <Text style={styles.actionButtonText}>View Location</Text>
-          </TouchableOpacity>
+        <ActionsContainer>
+          <AccentButton onPress={navigateToLocation}>
+            <ButtonText>View Location</ButtonText>
+          </AccentButton>
+
 
           <TouchableOpacity
             style={styles.actionButton}
@@ -65,102 +87,30 @@ export default function HomeScreen({ navigation }) {
 
           <TouchableOpacity
             style={[styles.actionButton, styles.secondaryButton]}
+
             onPress={() => Alert.alert('Feature', 'Coming soon!')}
           >
-            <Text style={[styles.actionButtonText, styles.secondaryButtonText]}>
+            <SecondaryButtonText>
               Smart Home Controls
-            </Text>
-          </TouchableOpacity>
+            </SecondaryButtonText>
+          </SecondaryButton>
 
-          <TouchableOpacity
-            style={[styles.actionButton, styles.secondaryButton]}
+          <SecondaryButton
             onPress={() => Alert.alert('Feature', 'Coming soon!')}
           >
-            <Text style={[styles.actionButtonText, styles.secondaryButtonText]}>
+            <SecondaryButtonText>
               Energy Monitoring
-            </Text>
-          </TouchableOpacity>
-        </View>
+            </SecondaryButtonText>
+          </SecondaryButton>
+        </ActionsContainer>
 
-        <View style={styles.footer}>
-          <TouchableOpacity
-            style={styles.logoutButton}
-            onPress={handleLogout}
-          >
-            <Text style={styles.logoutButtonText}>Logout</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </SafeAreaView>
+        <FooterContainer>
+          <LogoutButton onPress={handleLogout}>
+            <LogoutButtonText>Logout</LogoutButtonText>
+          </LogoutButton>
+        </FooterContainer>
+      </ContentContainer>
+    </SafeContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f5f5f5',
-  },
-  content: {
-    flex: 1,
-    paddingHorizontal: 20,
-  },
-  header: {
-    alignItems: 'center',
-    marginTop: 40,
-    marginBottom: 40,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 10,
-  },
-  subtitle: {
-    fontSize: 18,
-    color: '#666',
-  },
-  actions: {
-    flex: 1,
-  },
-  actionButton: {
-    backgroundColor: '#007AFF',
-    paddingVertical: 20,
-    paddingHorizontal: 30,
-    borderRadius: 12,
-    marginBottom: 15,
-    alignItems: 'center',
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-  },
-  secondaryButton: {
-    backgroundColor: 'white',
-    borderWidth: 2,
-    borderColor: '#007AFF',
-  },
-  actionButtonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: '600',
-  },
-  secondaryButtonText: {
-    color: '#007AFF',
-  },
-  footer: {
-    paddingBottom: 20,
-  },
-  logoutButton: {
-    alignItems: 'center',
-    paddingVertical: 15,
-  },
-  logoutButtonText: {
-    color: '#FF3B30',
-    fontSize: 16,
-    fontWeight: '500',
-  },
-});
