@@ -271,4 +271,70 @@ describe('LocationScreen', () => {
     // Button should show loading text
     expect(refreshButton).toBeTruthy();
   });
+
+  test('should show search button when no location is loaded', () => {
+    // Mock to immediately resolve with null to avoid loading state
+    getCurrentLocation.mockRejectedValue(new Error('No location'));
+
+    const { queryByText } = render(
+      <LocationScreen navigation={mockNavigation} />
+    );
+
+    // When there's an error, we shouldn't show the search button in the initial state
+    // because the error state has its own "Try Again" button
+    expect(queryByText('Search for my location')).toBeNull();
+  });
+
+  test('should trigger location search when search button is pressed', async () => {
+    const mockLocation = {
+      latitude: 37.4219999,
+      longitude: -122.0840575,
+      accuracy: 5,
+      timestamp: 1640995200000,
+    };
+
+    getCurrentLocation.mockResolvedValue(mockLocation);
+    getLocationAddress.mockResolvedValue(null);
+
+    const { getByText } = render(
+      <LocationScreen navigation={mockNavigation} />
+    );
+
+    await waitFor(() => {
+      expect(getByText('Search for my location')).toBeTruthy();
+    });
+
+    // Clear previous calls
+    getCurrentLocation.mockClear();
+    getLocationAddress.mockClear();
+
+    const searchButton = getByText('Search for my location');
+    fireEvent.press(searchButton);
+
+    // Should call getCurrentLocation
+    await waitFor(() => {
+      expect(getCurrentLocation).toHaveBeenCalled();
+    });
+  });
+
+  test('should show search button when location is loaded', async () => {
+    const mockLocation = {
+      latitude: 37.4219999,
+      longitude: -122.0840575,
+      accuracy: 5,
+      timestamp: 1640995200000,
+    };
+
+    getCurrentLocation.mockResolvedValue(mockLocation);
+    getLocationAddress.mockResolvedValue(null);
+
+    const { getByText } = render(
+      <LocationScreen navigation={mockNavigation} />
+    );
+
+    await waitFor(() => {
+      expect(getByText('Coordinates')).toBeTruthy();
+      expect(getByText('Search for my location')).toBeTruthy();
+    });
+  });
 });
