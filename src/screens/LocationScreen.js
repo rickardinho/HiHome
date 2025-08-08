@@ -22,6 +22,8 @@ import {
   ErrorText,
   ErrorButton,
   ErrorButtonText,
+  AccentButton,
+  ButtonText,
 } from '../theme/components';
 import styled from 'styled-components/native';
 import { theme } from '../theme';
@@ -33,6 +35,11 @@ const ContentScrollView = styled.ScrollView`
 
 const LocationContainer = styled.View`
   padding-vertical: ${theme.spacing.lg}px;
+`;
+
+const SearchButtonContainer = styled.View`
+  padding-vertical: ${theme.spacing.lg}px;
+  align-items: center;
 `;
 
 const SectionTitle = styled.Text`
@@ -107,6 +114,14 @@ export default function LocationScreen({ navigation }) {
       </HeaderContainer>
 
       <ContentScrollView>
+        {!isLoading && !location && !error && (
+          <SearchButtonContainer>
+            <AccentButton onPress={refreshLocation}>
+              <ButtonText>Search for my location</ButtonText>
+            </AccentButton>
+          </SearchButtonContainer>
+        )}
+
         {isLoading && (
           <LoadingContainer>
             <ActivityIndicator size="large" color={theme.colors.primary.main} />
@@ -125,6 +140,12 @@ export default function LocationScreen({ navigation }) {
 
         {location && !isLoading && (
           <LocationContainer>
+            <SearchButtonContainer>
+              <AccentButton onPress={refreshLocation}>
+                <ButtonText>Search for my location</ButtonText>
+              </AccentButton>
+            </SearchButtonContainer>
+
             <Card shadow>
               <SectionTitle>Coordinates</SectionTitle>
               <Row>
